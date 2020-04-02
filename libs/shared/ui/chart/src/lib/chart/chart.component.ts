@@ -26,7 +26,7 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
     this.chart = {
-      title: '',
+      title: 'Stock price',
       type: 'LineChart',
       data: [],
       columnNames: ['period', 'close'],
