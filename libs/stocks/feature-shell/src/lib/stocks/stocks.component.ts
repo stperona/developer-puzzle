@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
 
 @Component({
@@ -32,7 +34,11 @@ export class StocksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stockPickerForm.valueChanges.pipe(
+      debounceTime(400)
+    ).subscribe(() => { this.fetchQuote(); });
+  }
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
