@@ -25,7 +25,7 @@ export class StocksComponent implements OnInit {
     });
 
     this.stockPickerForm.get('period').valueChanges.subscribe((value: { from: string, to: string }) => {
-      // If 'from' value is set to before 'to' value set both values to the same date.
+      // If 'to' value is set to before 'from' value set both values to the same date.
       if (this.stockPickerForm.get('period').valid &&
           moment(value.to).isBefore(moment(value.from))) {
         this.stockPickerForm.patchValue({
