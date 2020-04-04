@@ -17,17 +17,33 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
-      >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div formGroupName="period">
+    <mat-form-field class="date-input">
+      <mat-label>From</mat-label>
+      <input formControlName="from" matInput [matDatepicker]="fromPicker" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromPicker></mat-datepicker>
+      <mat-error>
+        <ng-container *ngIf="!stockPickerForm.get('period.from').valid && stockPickerForm.get('period.from').touched">
+          <span *ngIf="stockPickerForm.get('period.from').hasError('required')">Please enter a 'from' date</span>
+          <span *ngIf="stockPickerForm.get('period.from').hasError('matDatepickerMax')">From date must be before today.</span>
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="date-input">
+      <mat-label>To</mat-label>
+      <input formControlName="to" matInput [matDatepicker]="toPicker" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+      <mat-datepicker #toPicker></mat-datepicker>
+      <mat-error>
+        <ng-container *ngIf="!stockPickerForm.get('period.to').valid && stockPickerForm.get('period.to').touched">
+          <span *ngIf="stockPickerForm.get('period.to').hasError('required')">Please enter a 'to' date</span>
+          <span *ngIf="stockPickerForm.get('period.to').hasError('matDatepickerMax')">To date must be before today.</span>
+        </ng-container>
+      </mat-error>
+    </mat-form-field>
+  </div>
 
   <button (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
